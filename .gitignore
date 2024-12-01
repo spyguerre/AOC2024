@@ -1,6 +1,5 @@
 # Default ignored files
 /shelf/
-/.idea/
 # Editor-based HTTP Client requests
 /httpRequests/
 # Datasource local storage ignored files
@@ -8,3 +7,6 @@
 /dataSources.local.xml
 # IntelliJ
 /.idea/*
+
+# Don't give away inputs
+**/input.txt

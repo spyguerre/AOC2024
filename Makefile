@@ -1,47 +1,23 @@
-# Variables
-OS := $(shell uname -s 2>/dev/null || echo Windows) # Detect OS
-JAVAC = javac
-JAVA = java
-
-# Directories
+# Directory paths
 SRC_DIR = src
 BIN_DIR = bin
 
-# Main class (without .java or .class)
-MAIN_CLASS = Main
+# Default day is set to Day01
+DAY = Day01
 
-# Find all .java files
-SOURCES = $(wildcard $(SRC_DIR)/*.java)
+# Compiler and flags
+JAVAC = javac
+JAVA = java
+JFLAGS = -d $(BIN_DIR)
 
-# Replace .java with .class for all source files
-CLASSES = $(patsubst $(SRC_DIR)/%.java, $(BIN_DIR)/%.class, $(SOURCES))
+# Java files
+MAIN_FILE = $(SRC_DIR)/$(DAY)/*.java
 
-# Path separator adjustment for Windows
-ifeq ($(OS),Windows)
-    MKDIR = mkdir
-    RM = rmdir /S /Q
-    PATH_SEP = ;
-else
-    MKDIR = mkdir -p
-    RM = rm -rf
-    PATH_SEP = :
-endif
+# Default target: compile and run the code
+run: $(MAIN_FILE) $(PAIR_FILE)
+	$(JAVAC) $(JFLAGS) $(MAIN_FILE) $(PAIR_FILE)
+	$(JAVA) -cp $(BIN_DIR) $(DAY).Main
 
-# Default target: build everything
-all: $(BIN_DIR) $(CLASSES)
-
-# Rule to create bin directory
-$(BIN_DIR):
-	$(MKDIR) $(BIN_DIR)
-
-# Rule to compile .java files
-$(BIN_DIR)/%.class: $(SRC_DIR)/%.java
-	$(JAVAC) -d $(BIN_DIR) $<
-
-# Run the main class
-run: all
-	$(JAVA) -cp $(BIN_DIR)$(PATH_SEP) $(MAIN_CLASS)
-
-# Clean the build
+# Clean up generated class files
 clean:
-	$(RM) $(BIN_DIR)
+	rm -rf $(BIN_DIR)/*
