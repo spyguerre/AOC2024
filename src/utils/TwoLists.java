@@ -1,4 +1,4 @@
-package Day01;
+package utils;
 
 import java.util.List;
 import java.lang.Math;

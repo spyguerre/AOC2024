@@ -1,6 +1,6 @@
 package Day01;
 
-import utils.AOCFileReader;
+import utils.*;
 
 public class Main {
     public static void main(String[] args) {

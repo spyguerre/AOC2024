@@ -13,11 +13,23 @@ JFLAGS = -d $(BIN_DIR)
 # Java files
 JAVA_FILES = $(wildcard $(SRC_DIR)/$(DAY)/*.java $(SRC_DIR)/utils/*.java)
 
+# Platform detection for cross-platform support
+ifeq ($(OS),Windows_NT)
+    RM = del /f /q
+    RMDIR = rmdir /s /q
+    SLASH = \\
+else
+    RM = rm -f
+    RMDIR = rm -rf
+    SLASH = /
+endif
+
 # Default target: compile and run the code
-run: $(JAVA_FILES) $(PAIR_FILE)
-	$(JAVAC) $(JFLAGS) $(JAVA_FILES) $(PAIR_FILE)
+run: $(JAVA_FILES)
+	$(JAVAC) $(JFLAGS) $(JAVA_FILES)
 	$(JAVA) -cp $(BIN_DIR) $(DAY).Main
 
 # Clean up generated class files
 clean:
-	rm -rf $(BIN_DIR)/*
+	$(RM) $(BIN_DIR)$(SLASH)*.class
+	$(RMDIR) $(BIN_DIR)
