@@ -1,9 +1,10 @@
-package utils;
+package Day01;
 
 import java.util.List;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Collections;
+import utils.*;
 
 public class TwoLists {
     public List<Integer> list1;

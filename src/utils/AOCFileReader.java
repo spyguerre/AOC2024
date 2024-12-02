@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import Day01.TwoLists;
+import Day02.Report;
 
 public class AOCFileReader {
     // Static instance of the class to ensure only one instance
@@ -21,7 +23,7 @@ public class AOCFileReader {
         return instance;
     }
 
-    // Read today's input content
+    // Reads today's input content
     public List<String> read(int day) {
         // Format the string to a decimal (d) number and pad it with leading zeros (0) up to the specified width (2).
         String zfilledDay = String.format("%02d", day);
@@ -38,7 +40,7 @@ public class AOCFileReader {
         return lines;
     }
 
-    // Read day 1 inputs
+    // Reads inputs of two vertical lists separated by 3 spaces
     public TwoLists readTwoLists(int day) {
         List<String> lines = this.read(day);
 
@@ -51,7 +53,26 @@ public class AOCFileReader {
 
         return lists;
     }
+
+    // Reads a list of integer lists, which are separated by a single space
+    public List<Report> readReports(int day) {
+        // Get today's inputs as a list of Strings
+        List<String> lines = this.read(day);
+
+        List<Report> res = new ArrayList<>();
+
+        // Iterate over each line
+        for (String line : lines) {
+            // Create integer list and add its reference in res
+            Report ints = new Report();
+            res.add(ints);
+            // Add each number to the list after converting it to int
+            String[] nums = line.split(" ");
+            for (String num : nums) {
+                ints.add(Integer.parseInt(num));
+            }
+        }
+
+        return res;
+    }
 }
-
-
-
