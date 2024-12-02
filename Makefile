@@ -11,11 +11,11 @@ JAVA = java
 JFLAGS = -d $(BIN_DIR)
 
 # Java files
-MAIN_FILE = $(SRC_DIR)/$(DAY)/*.java
+JAVA_FILES = $(wildcard $(SRC_DIR)/$(DAY)/*.java $(SRC_DIR)/utils/*.java)
 
 # Default target: compile and run the code
-run: $(MAIN_FILE) $(PAIR_FILE)
-	$(JAVAC) $(JFLAGS) $(MAIN_FILE) $(PAIR_FILE)
+run: $(JAVA_FILES) $(PAIR_FILE)
+	$(JAVAC) $(JFLAGS) $(JAVA_FILES) $(PAIR_FILE)
 	$(JAVA) -cp $(BIN_DIR) $(DAY).Main
 
 # Clean up generated class files
