@@ -24,7 +24,7 @@ public class AOCFileReader {
     }
 
     // Reads today's input content
-    public List<String> read(int day) {
+    public List<String> readLines(int day) {
         // Format the string to a decimal (d) number and pad it with leading zeros (0) up to the specified width (2).
         String zfilledDay = String.format("%02d", day);
         List<String> lines = new ArrayList<>();
@@ -42,7 +42,7 @@ public class AOCFileReader {
 
     // Reads inputs of two vertical lists separated by 3 spaces
     public TwoLists readTwoLists(int day) {
-        List<String> lines = this.read(day);
+        List<String> lines = this.readLines(day);
 
         TwoLists lists = new TwoLists();
         for (String line : lines) {
@@ -57,7 +57,7 @@ public class AOCFileReader {
     // Reads a list of integer lists, which are separated by a single space
     public List<Report> readReports(int day) {
         // Get today's inputs as a list of Strings
-        List<String> lines = this.read(day);
+        List<String> lines = this.readLines(day);
 
         List<Report> res = new ArrayList<>();
 
@@ -74,5 +74,10 @@ public class AOCFileReader {
         }
 
         return res;
+    }
+
+    // Returns a simple String containing today's inputs contents
+    public String read(int day) {
+        return String.join("\n", this.readLines(day));
     }
 }
