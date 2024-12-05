@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Day01.TwoLists;
 import Day02.Report;
+import Day05.*;
 
 public class AOCFileReader {
     // Static instance of the class to ensure only one instance
@@ -79,5 +80,34 @@ public class AOCFileReader {
     // Returns a simple String containing today's inputs contents
     public String read(int day) {
         return String.join("\n", this.readLines(day));
+    }
+
+    // Reads the content of pages ordering and updates and returns a ManualData object
+    public ManualData readManual(int day) {
+        List<String> lines = this.readLines(day);
+
+        ManualData manual = new ManualData();
+
+        int lineNum = 0;
+        int lineMax = lines.size();
+
+        while (!lines.get(lineNum).equals("")) {
+            String[] constr = lines.get(lineNum).split("\\|");
+            manual.constraints.add(new Constraint(Integer.parseInt(constr[0]), Integer.parseInt(constr[1])));
+            lineNum++;
+        }
+
+        lineNum++;
+
+        while (lineNum < lineMax) {
+            Update update = new Update();
+            manual.updates.add(update);
+            for (String strPage : lines.get(lineNum).split(",")) {
+                update.pages.add(Integer.parseInt(strPage));
+            }
+            lineNum++;
+        }
+
+        return manual;
     }
 }
