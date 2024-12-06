@@ -110,4 +110,20 @@ public class AOCFileReader {
 
         return manual;
     }
+
+    // Reads a matrix of char
+    public List<List<Character>> readCharMatrix(int day) {
+        List<String> lines = this.readLines(day);
+        List<List<Character>> res = new ArrayList<>();
+
+        for (String line : lines) {
+            List<Character> row = new ArrayList<>();
+            res.add(row);
+            for (int i = 0; i < line.length(); i++) {
+                row.add(line.charAt(i));
+            }
+        }
+
+        return res;
+    }
 }
