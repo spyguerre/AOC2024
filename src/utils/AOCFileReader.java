@@ -8,6 +8,7 @@ import java.util.List;
 import Day01.TwoLists;
 import Day02.Report;
 import Day05.*;
+import Day07.*;
 
 public class AOCFileReader {
     // Static instance of the class to ensure only one instance
@@ -122,6 +123,25 @@ public class AOCFileReader {
             for (int i = 0; i < line.length(); i++) {
                 row.add(line.charAt(i));
             }
+        }
+
+        return res;
+    }
+
+    // Reads a list of Equation
+    public List<Equation> readEquations(int day) {
+        List<String> lines = this.readLines(day);
+        List<Equation> res = new ArrayList<>();
+
+        for (String line : lines) {
+            long eqRes = Long.parseLong(line.split(":")[0]);
+            String[] eqNumbersStr = line.split(":")[1].split(" ");
+            List<Long> eqNumbers = new ArrayList<>();
+            for (int i = 1; i < eqNumbersStr.length; i++) { // Starts at 1 to avoid first "" string
+                eqNumbers.add(Long.parseLong(eqNumbersStr[i]));
+            }
+
+            res.add(new Equation(eqRes, eqNumbers));
         }
 
         return res;
