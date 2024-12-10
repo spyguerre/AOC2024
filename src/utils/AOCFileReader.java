@@ -10,14 +10,23 @@ import Day02.Report;
 import Day05.*;
 import Day07.*;
 
+/**
+ * Class used to read inputs from the Advent of Code puzzles.
+ */
 public class AOCFileReader {
-    // Static instance of the class to ensure only one instance
+    /**
+     * Static instance of the class to ensure only one instance.
+     */
     private static AOCFileReader instance = null;
 
-    // Private constructor to prevent external instantiation
+    /**
+     * Private constructor to prevent external instantiation.
+     */
     private AOCFileReader() {}
 
-    // Public method to provide access to the instance
+    /**
+     * Public static method to provide access to the instance.
+     */
     public static AOCFileReader getInstance() {
         if (instance == null) {
             instance = new AOCFileReader();
@@ -25,7 +34,10 @@ public class AOCFileReader {
         return instance;
     }
 
-    // Reads today's input content
+    /**
+     * Reads today's input content.
+     * @return a list of lines found in the input's content.
+     */
     public List<String> readLines(int day) {
         // Format the string to a decimal (d) number and pad it with leading zeros (0) up to the specified width (2).
         String zfilledDay = String.format("%02d", day);
@@ -42,7 +54,9 @@ public class AOCFileReader {
         return lines;
     }
 
-    // Reads inputs of two vertical lists separated by 3 spaces
+    /**
+     * Reads inputs of two vertical lists separated by 3 spaces.
+     */
     public TwoLists readTwoLists(int day) {
         List<String> lines = this.readLines(day);
 
@@ -56,7 +70,9 @@ public class AOCFileReader {
         return lists;
     }
 
-    // Reads a list of integer lists, which are separated by a single space
+    /**
+     * Reads a list of Reports, which are a list of integers separated by a single space.
+     */
     public List<Report> readReports(int day) {
         // Get today's inputs as a list of Strings
         List<String> lines = this.readLines(day);
@@ -78,12 +94,16 @@ public class AOCFileReader {
         return res;
     }
 
-    // Returns a simple String containing today's inputs contents
+    /**
+     * Returns a simple String containing today's inputs contents.
+     */
     public String read(int day) {
         return String.join("\n", this.readLines(day));
     }
 
-    // Reads the content of pages ordering and updates and returns a ManualData object
+    /**
+     * Reads the content of pages ordering and updates and returns a ManualData object.
+     */
     public ManualData readManual(int day) {
         List<String> lines = this.readLines(day);
 
@@ -112,7 +132,9 @@ public class AOCFileReader {
         return manual;
     }
 
-    // Reads a matrix of char
+    /**
+     * Reads a matrix of characters.
+     */
     public List<List<Character>> readCharMatrix(int day) {
         List<String> lines = this.readLines(day);
         List<List<Character>> res = new ArrayList<>();
@@ -128,7 +150,9 @@ public class AOCFileReader {
         return res;
     }
 
-    // Reads a list of Equation
+    /**
+     * Reads a list of Equations.
+     */
     public List<Equation> readEquations(int day) {
         List<String> lines = this.readLines(day);
         List<Equation> res = new ArrayList<>();
@@ -142,6 +166,24 @@ public class AOCFileReader {
             }
 
             res.add(new Equation(eqRes, eqNumbers));
+        }
+
+        return res;
+    }
+
+    /**
+     * Reads a matrix of Integers.
+     */
+    public List<List<Integer>> readIntMatrix(int day) {
+        List<List<Character>> charMatrix = this.readCharMatrix(day);
+
+        List<List<Integer>> res = new ArrayList<>();
+        for (List<Character> charRow : charMatrix) {
+            List<Integer> intRow = new ArrayList<>();
+            res.add(intRow);
+            for (Character c : charRow) {
+                intRow.add((int)(c - '0'));
+            }
         }
 
         return res;
