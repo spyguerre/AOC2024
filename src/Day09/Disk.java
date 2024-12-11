@@ -10,7 +10,7 @@ public class Disk {
     /**
      * Input of the puzzle divided into chars.
      */
-    private char[] inputMemory;
+    private final char[] inputMemory;
     /**
      * Transformation of the this.inputmemory into the visual form os the memory.
      */
@@ -56,14 +56,14 @@ public class Disk {
         boolean isFile = true;
         int currentId = 0;
 
-        for (int i = 0; i < this.inputMemory.length; i++) {
+        for (char c : this.inputMemory) {
             if (isFile) {
-                for (int j = 0; j < (int)(this.inputMemory[i] - '0'); j++) {
+                for (int j = 0; j < (c - '0'); j++) {
                     this.visualMemory.add(currentId);
                 }
                 currentId += 1;
             } else {
-                for (int j = 0; j < (int)(this.inputMemory[i] - '0'); j++) {
+                for (int j = 0; j < (c - '0'); j++) {
                     this.visualMemory.add(-1);
                 }
             }
@@ -89,7 +89,7 @@ public class Disk {
     /**
      * If wholeFiles: redirects to orderDisk().
      * Else: Orders the whole this.visualMemory by trying to move each whole files from right to left once.
-     * @param wholeFiles
+     * @param wholeFiles If true, redirects to orderDisk(). Else, methods orders the whole this.visualMemory by trying to move each whole files from right to left once.
      */
     private void orderDisk(boolean wholeFiles) {
         if (!wholeFiles) {
@@ -145,9 +145,6 @@ public class Disk {
      * Tries to move all entire file block groups once, from right to left, to the left-most gap with sufficient space.
      */
     private void moveFileBlock() {
-        int fileBlockValue = this.visualMemory.get(this.startCursor);
-        int currentBlockValue = this.visualMemory.get(this.startCursor);
-
         int localStartCursor = this.startCursor;
         int localEndCursor = this.endCursor;
 
@@ -156,7 +153,6 @@ public class Disk {
             this.moveBlock(localStartCursor, localEndCursor);
             localStartCursor++;
             localEndCursor--;
-            currentBlockValue = this.visualMemory.get(localStartCursor);
         }
     }
 
@@ -220,7 +216,7 @@ public class Disk {
 
     /**
      * Computes the checksum of the filesystem, as described in the subject.
-     * @return
+     * @return the checksum of the filesystem, as described in the subject.
      */
     public long getCheckSum() {
         long sum = 0;
@@ -228,7 +224,7 @@ public class Disk {
         for (int i = 0; i < this.visualMemory.size(); i++) {
             int blockValue = this.visualMemory.get(i);
             if (blockValue != -1) {
-                sum += i * blockValue;
+                sum += (long) i * blockValue;
             }
         }
 

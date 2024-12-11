@@ -11,15 +11,15 @@ public class HikingMap {
     /**
      * The topographic map.
      */
-    private List<List<Integer>> matrix;
+    private final List<List<Integer>> matrix;
     /**
      * The coordinates that are used to search the graph.
      */
-    private Coordinate coos;
+    private final Coordinate coos;
     /**
      * The directions in which a hiker can travel.
      */
-    private int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    private final int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
     /**
      * Constructor for a HikingMap.
@@ -36,7 +36,7 @@ public class HikingMap {
 
     /**
      * Goes to the next 0 value in this.matrix using this.coos, in reading order.
-     * @return
+     * @return whether this.coos reached the end of the this.matrix at the end of execution of this method.
      */
     private boolean goToNext0() {
         boolean reachedTheEnd = false;

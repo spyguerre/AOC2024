@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import Day01.TwoLists;
 import Day02.Report;
@@ -187,5 +188,15 @@ public class AOCFileReader {
         }
 
         return res;
+    }
+
+    public List<Long> readLongList(int day) {
+        List<String> lines = this.readLines(day);
+        String[] stringArray = lines.getFirst().split(" ");
+        List<Long> longList = new ArrayList<>();
+        for (String str : stringArray) {
+            longList.add(Long.parseLong(str));
+        }
+        return longList;
     }
 }
