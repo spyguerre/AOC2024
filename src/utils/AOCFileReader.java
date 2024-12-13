@@ -10,6 +10,8 @@ import Day01.TwoLists;
 import Day02.Report;
 import Day05.*;
 import Day07.*;
+import Day13.ClawMachine;
+import Day13.ClawMachineList;
 
 /**
  * Class used to read inputs from the Advent of Code puzzles.
@@ -190,6 +192,10 @@ public class AOCFileReader {
         return res;
     }
 
+    /**
+     * Reads a list of longs separated by a single space in the first line.
+     * @return
+     */
     public List<Long> readLongList(int day) {
         List<String> lines = this.readLines(day);
         String[] stringArray = lines.getFirst().split(" ");
@@ -198,5 +204,36 @@ public class AOCFileReader {
             longList.add(Long.parseLong(str));
         }
         return longList;
+    }
+
+    /**
+     * Creates a ClawMachineList representing today's input.
+     * @return the claw machine list.
+     */
+    public ClawMachineList readClawMachineList(int day) {
+        int lineNum = 0;
+        List<String> lines = this.readLines(day);
+        ClawMachineList res = new ClawMachineList(new ArrayList<>());
+        long ax=0, ay=0, bx=0, by=0, x, y;
+        for (String line : lines) {
+            if (lineNum == 0) {
+                String[] nums = line.split("Button A: X+")[1].split(", Y+");
+                ax = Long.parseLong(nums[0]);
+                ay = Long.parseLong(nums[1]);
+            } else if (lineNum == 1) {
+                String[] nums = line.split("Button B: X+")[1].split(", Y+");
+                bx = Long.parseLong(nums[0]);
+                by = Long.parseLong(nums[1]);
+            } else if (lineNum == 2) {
+                String[] nums = line.split("Prize: X=")[1].split(", Y=");
+                x = Long.parseLong(nums[0]);
+                y = Long.parseLong(nums[1]);
+                res.add(new ClawMachine(ax, ay, bx, by, x, y));
+            }
+
+            lineNum = (lineNum+1)%4;
+        }
+
+        return res;
     }
 }
