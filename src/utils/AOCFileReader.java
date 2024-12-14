@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import Day01.TwoLists;
 import Day02.Report;
@@ -12,6 +11,8 @@ import Day05.*;
 import Day07.*;
 import Day13.ClawMachine;
 import Day13.ClawMachineList;
+import Day14.Robot;
+import Day14.Robots;
 
 /**
  * Class used to read inputs from the Advent of Code puzzles.
@@ -65,7 +66,7 @@ public class AOCFileReader {
 
         TwoLists lists = new TwoLists();
         for (String line : lines) {
-            String[] nums = line.split("   ");
+            String[] nums = line.split(" {3}");
             lists.list1.add(Integer.parseInt(nums[0]));
             lists.list2.add(Integer.parseInt(nums[1]));
         }
@@ -115,7 +116,7 @@ public class AOCFileReader {
         int lineNum = 0;
         int lineMax = lines.size();
 
-        while (!lines.get(lineNum).equals("")) {
+        while (!lines.get(lineNum).isEmpty()) {
             String[] constr = lines.get(lineNum).split("\\|");
             manual.constraints.add(new Constraint(Integer.parseInt(constr[0]), Integer.parseInt(constr[1])));
             lineNum++;
@@ -185,7 +186,7 @@ public class AOCFileReader {
             List<Integer> intRow = new ArrayList<>();
             res.add(intRow);
             for (Character c : charRow) {
-                intRow.add((int)(c - '0'));
+                intRow.add(c - '0');
             }
         }
 
@@ -194,7 +195,6 @@ public class AOCFileReader {
 
     /**
      * Reads a list of longs separated by a single space in the first line.
-     * @return
      */
     public List<Long> readLongList(int day) {
         List<String> lines = this.readLines(day);
@@ -208,7 +208,6 @@ public class AOCFileReader {
 
     /**
      * Creates a ClawMachineList representing today's input.
-     * @return the claw machine list.
      */
     public ClawMachineList readClawMachineList(int day) {
         int lineNum = 0;
@@ -232,6 +231,23 @@ public class AOCFileReader {
             }
 
             lineNum = (lineNum+1)%4;
+        }
+
+        return res;
+    }
+
+    /**
+     * Reads a list of robots' data from today's input and constructs a Robot list (Robots) from it.
+     */
+    public Robots readRobots(int day) {
+        List<String> lines = this.readLines(day);
+        Robots res = new Robots(new ArrayList<>());
+        for (String line : lines) {
+            String[] data = line.split("p=")[1].split(" v=");
+            String[] pos = data[0].split(",");
+            String[] speed = data[1].split(",");
+            res.add(new Robot(Integer.parseInt(pos[0]), Integer.parseInt(pos[1]),
+                    Integer.parseInt(speed[0]), Integer.parseInt(speed[1])));
         }
 
         return res;

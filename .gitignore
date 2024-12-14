@@ -12,5 +12,7 @@
 
 # Don't give away inputs
 **/input.txt
+# Nor outputs, just in case
+**/output.txt
 
 AOC2024.iml
