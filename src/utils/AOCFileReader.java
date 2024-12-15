@@ -13,6 +13,7 @@ import Day13.ClawMachine;
 import Day13.ClawMachineList;
 import Day14.Robot;
 import Day14.Robots;
+import Day15.RobotWareHouse;
 
 /**
  * Class used to read inputs from the Advent of Code puzzles.
@@ -251,5 +252,42 @@ public class AOCFileReader {
         }
 
         return res;
+    }
+
+    /**
+     * Reads a lanternfish's mad Robot Warehouse.
+     * @param wide Whether the input should be widened as described in the subject.
+     */
+    public RobotWareHouse readRobotWareHouse(int day, boolean wide) {
+        List<String> lines = this.readLines(day);
+        boolean seenEmptyLine = false;
+
+        List<List<Character>> resMap = new ArrayList<>();
+        List<Character> moves = new ArrayList<>();
+        for (String line : lines) {
+            if (line.isEmpty()) {seenEmptyLine = true;}
+            else if (!seenEmptyLine) { // Read the map.
+                List<Character> row = new ArrayList<>();
+                resMap.add(row);
+                for (int i = 0; i < line.length(); i++) {
+                    if (!wide) {
+                        row.add(line.charAt(i));
+                    } else {
+                        char c = line.charAt(i);
+                        if (c == '#' || c == '.') {
+                            row.add(line.charAt(i)); row.add(line.charAt(i));
+                        } else if (c == 'O') {
+                            row.add('['); row.add(']');
+                        } else if (c == '@') {
+                            row.add('@'); row.add('.');
+                        }
+                    }
+                }
+            } else { // Read the robot moves.
+                for (Character c: line.toCharArray()) {moves.add(c);}
+            }
+        }
+
+        return new RobotWareHouse(resMap, moves);
     }
 }

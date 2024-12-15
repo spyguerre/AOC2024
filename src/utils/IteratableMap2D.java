@@ -6,7 +6,7 @@ import java.util.List;
  * Represents a 2D map, useful to represent some puzzle inputs, that is iterable thanks to a few methods.
  * @param <E> The type of data stored in the map.
  */
-public abstract class IteratableMap<E> extends StructMap<E> {
+public abstract class IteratableMap2D<E> extends Map2D<E> {
     /**
      * The current coordinate of the map's iteration.
      */
@@ -16,7 +16,7 @@ public abstract class IteratableMap<E> extends StructMap<E> {
      * Constructor for an IterableMap.
      * @param matrix The matrix that the StructMap should represent.
      */
-    public IteratableMap(List<List<E>> matrix) {
+    public IteratableMap2D(List<List<E>> matrix) {
         super(matrix);
         this.coos = new Coordinate(0, -1);
     }

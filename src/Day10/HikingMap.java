@@ -7,15 +7,7 @@ import utils.*;
 /**
  * A class that represents a topographic map using a matrix of integers.
  */
-public class HikingMap {
-    /**
-     * The topographic map.
-     */
-    private final List<List<Integer>> matrix;
-    /**
-     * The coordinates that are used to search the graph.
-     */
-    private final Coordinate coos;
+public class HikingMap extends IteratableMap2D<Integer> {
     /**
      * The directions in which a hiker can travel.
      */
@@ -26,28 +18,13 @@ public class HikingMap {
      * @param matrix A topologic map, which is deepcopied.
      */
     public HikingMap(List<List<Integer>> matrix) {
+        super(matrix);
         this.matrix = new ArrayList<>();
         for (List<Integer> row : matrix) {
             this.matrix.add(new ArrayList<>(row));
         }
 
         this.coos = new Coordinate(0, -1); // j is -1 in case there is a 0 in coordinates (0, 0).
-    }
-
-    /**
-     * Goes to the next 0 value in this.matrix using this.coos, in reading order.
-     * @return whether this.coos reached the end of the this.matrix at the end of execution of this method.
-     */
-    private boolean goToNext0() {
-        boolean reachedTheEnd = false;
-
-        coos.next(matrix.size(), matrix.get(0).size()); // Leave the current 0
-
-        while (!reachedTheEnd && matrix.get(coos.i).get(coos.j) != 0) {
-            reachedTheEnd = !coos.next(matrix.size(), matrix.get(0).size());
-        }
-
-        return reachedTheEnd;
     }
 
     /**
@@ -60,9 +37,9 @@ public class HikingMap {
     private void trail9CountRec(int i, int j, int h, List<Coordinate> coosList) {
         if (h == 8) {
             for (int[] direction : directions) {
-                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(matrix.size(), matrix.get(0).size());
+                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(n, p);
                 if (inMap) {
-                    if (matrix.get(i+direction[0]).get(j+direction[1]) == 9) {
+                    if (this.get(i+direction[0], j+direction[1]) == 9) {
                         Coordinate newCoos = new Coordinate(i+direction[0], j+direction[1]);
                         boolean alreadyInList = false;
                         for (Coordinate coos : coosList) {
@@ -79,9 +56,9 @@ public class HikingMap {
             }
         } else {
             for (int[] direction : directions) {
-                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(matrix.size(), matrix.get(0).size());
+                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(n, p);
                 if (inMap) {
-                    if (matrix.get(i+direction[0]).get(j+direction[1]) == h+1) {
+                    if (this.get(i+direction[0], j+direction[1]) == h+1) {
                         trail9CountRec(i+direction[0], j+direction[1], h+1, coosList);
                     }
                 }
@@ -94,7 +71,7 @@ public class HikingMap {
      * @return The number of different 9's found by exploring.
      */
     private int trail9Count() {
-        if (matrix.get(coos.i).get(coos.j) != 0) {
+        if (this.get() != 0) {
             return 0;
         }
         List<Coordinate> coosList = new ArrayList<>();
@@ -114,16 +91,16 @@ public class HikingMap {
 
         if (h == 8) {
             for (int[] direction : directions) {
-                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(matrix.size(), matrix.get(0).size());
+                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(n, p);
                 if (inMap) {
-                    count += matrix.get(i+direction[0]).get(j+direction[1]) == 9 ? 1 : 0;
+                    count += this.get(i+direction[0], j+direction[1]) == 9 ? 1 : 0;
                 }
             }
         } else {
             for (int[] direction : directions) {
-                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(matrix.size(), matrix.get(0).size());
+                boolean inMap = (new Coordinate(i+direction[0], j+direction[1])).isInMap(n, p);
                 if (inMap) {
-                    if (matrix.get(i+direction[0]).get(j+direction[1]) == h+1) {
+                    if (this.get(i+direction[0], j+direction[1]) == h+1) {
                         count += trailCountRec(i+direction[0], j+direction[1], h+1);
                     }
                 }
@@ -138,7 +115,7 @@ public class HikingMap {
      * @return the number of different hiking trails found.
      */
     private int trailCount() {
-        if (matrix.get(coos.i).get(coos.j) != 0) {
+        if (this.get() != 0) {
             return 0;
         }
         return trailCountRec(this.coos.i, this.coos.j, 0);
@@ -152,7 +129,7 @@ public class HikingMap {
     public int totalTrailCount(boolean distinct) {
         boolean reachedTheEnd = false;
         int count = 0;
-        this.goToNext0();
+        this.goToNextX(0);
 
         while (!reachedTheEnd) {
             if (distinct) {
@@ -160,10 +137,10 @@ public class HikingMap {
             } else {
                 count += trail9Count();
             }
-            reachedTheEnd = this.goToNext0();
+            reachedTheEnd = !this.goToNextX(0);
         }
 
-        if (this.matrix.get(coos.i).get(coos.j) == 0) {
+        if (this.get() == 0) {
             if (distinct) {
                 count += trailCount();
             } else {
