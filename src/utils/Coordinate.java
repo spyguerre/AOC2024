@@ -63,4 +63,11 @@ public class Coordinate {
     public String toString() {
         return "(" + i + ", " + j + ")";
     }
+
+    /**
+     * @return a copy of the Coordinate.
+     */
+    public Coordinate clone() {
+        return new Coordinate(i, j);
+    }
 }
