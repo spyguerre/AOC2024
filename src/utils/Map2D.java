@@ -22,7 +22,9 @@ public abstract class Map2D<E> {
     /**
      * The 4 directions (di, dj) around any coordinate.
      */
-    public int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    public static int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+    public static char[] symbols = {'>', 'v', '<', '^'};
 
     /**
      * The constructor for a StructMap.
@@ -41,6 +43,15 @@ public abstract class Map2D<E> {
      */
     public E get(int i, int j) {
         return matrix.get(i).get(j);
+    }
+
+    /**
+     * Getter for an item in the this.matrix.
+     * @param coos The coordinates of the item to get.
+     * @return the item at position (i, j) in this.matrix.
+     */
+    public E get(Coordinate coos) {
+        return matrix.get(coos.i).get(coos.j);
     }
 
     /**

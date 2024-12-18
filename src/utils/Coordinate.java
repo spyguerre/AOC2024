@@ -33,6 +33,16 @@ public class Coordinate {
     }
 
     /**
+     * Checks if this equals other coordinates.
+     * @param i another coordinate.
+     * @param j another coordinate.
+     * @return whether this equals the other coordinate.
+     */
+    public boolean equals(int i, int j) {
+        return this.i == i && this.j == j;
+    }
+
+    /**
      * Checks whether this Coordinate is whithin the bounds of the map.
      * @param n Vertical size of the map. (i)
      * @param p Horizontal size of the map. (j)
