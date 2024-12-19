@@ -11,9 +11,11 @@ public class Main {
         List<String> input = AOCFileReader.getInstance().readLines(18);
         List<List<Node>> matrix = new ArrayList<>();
 
+        // Hyperparameters of the problem
         int n = 71, p = 71;
         int instantBytes = 1024;
 
+        // Initializes the matrix with Nodes.
         for (int i = 0; i < n; i++) {
             List<Node> row = new ArrayList<>();
             matrix.add(row);
@@ -21,6 +23,8 @@ public class Main {
                 row.add(new Node(i, j));
             }
         }
+
+        // Mark the first 1024 Nodes of the list as corrupted
         for (int k = 0; k < instantBytes; k++) {
             String line = input.get(k);
             int j = Integer.parseInt(line.split(",")[0]);
@@ -34,6 +38,7 @@ public class Main {
 
         int part1res = memory.getPathLength();
 
+        // Adds one more corrupted byte from the list and tries to find a path, at every iteration.
         Coordinate part2res = new Coordinate(-1, -1);
         for (int k = instantBytes; k < input.size(); k++) {
             memory.resetDijkstra();

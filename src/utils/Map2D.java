@@ -23,7 +23,9 @@ public abstract class Map2D<E> {
      * The 4 directions (di, dj) around any coordinate.
      */
     public static int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
+    /**
+     * An Array to visually display directions on a map.
+     */
     public static char[] symbols = {'>', 'v', '<', '^'};
 
     /**

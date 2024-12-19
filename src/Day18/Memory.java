@@ -6,11 +6,21 @@ import utils.Map2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing a Memory.
+ */
 public class Memory extends Map2D<Node> {
+    /**
+     * Constructor for a Memory.
+     * @param matrix The matrix representing each byte (as a Node) in the memory.
+     */
     public Memory(List<List<Node>> matrix) {
         super(matrix);
     }
 
+    /**
+     * Dijkstra algorithm. Explores the whole graph and saves the shortest path thanks to each Node.origin.
+     */
     public void dijkstra() {
         List<Node> toVisit = new ArrayList<>();
         Node start = this.get(0, 0);
@@ -34,6 +44,10 @@ public class Memory extends Map2D<Node> {
         }
     }
 
+    /**
+     * Computes the shortest path's length, after dijkstra's has been performed.
+     * @return the shortest path's length. Is null if no path was found.
+     */
     public Integer getPathLength() {
         Node current = this.get(n-1, p-1);
         Integer length = null;
@@ -48,6 +62,9 @@ public class Memory extends Map2D<Node> {
         return length;
     }
 
+    /**
+     * Resets the information stored in the Nodes when performing Dijkstra's algorithm.
+     */
     public void resetDijkstra() {
         for (List<Node> row : matrix) {
             for (Node node : row) {
