@@ -1,6 +1,6 @@
 # AOC2024
 My solutions for this year's 
-Advent of Code algorithm/programming puzzles!
+[Advent of Code](https://adventofcode.com/2024) algorithm/programming puzzles!
 
 # Running
 - Clone the repo:
