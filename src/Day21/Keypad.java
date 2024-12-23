@@ -29,9 +29,9 @@ public abstract class Keypad {
 
     public List<String> tapKey(char c, List<String> sequences, String currentSequence, Coordinate currentCoos) {
         Coordinate keyCoos = keypadToControl.layout.get(c);
-        Coordinate currentCoos = keypadToControl.coos;
+        // Coordinate currentCoos = keypadToControl.coos;
 
-        String currentSequence = sequences.remove(i);
+        // String currentSequence = sequences.remove(i);
 
         if (currentCoos.equals(keyCoos)) {
             sequences.add(currentSequence + 'A');
@@ -41,25 +41,25 @@ public abstract class Keypad {
         if (currentCoos.j < keyCoos.j) {
             sequences.add(currentSequence + '>');
             currentCoos.j++;
-            tapKey(c, sequences, sequences.size() - 1);
+            // tapKey(c, sequences, sequences.size() - 1);
         }
 
         if (currentCoos.i < keyCoos.i) {
             sequences.add(currentSequence + 'v');
             currentCoos.i++;
-            tapKey(c, sequences, sequences.size() - 1);
+            // tapKey(c, sequences, sequences.size() - 1);
         }
 
         if (currentCoos.j > keyCoos.j) {
             sequences.add(currentSequence + '<');
             currentCoos.j--;
-            tapKey(c, sequences, sequences.size() - 1);
+            // tapKey(c, sequences, sequences.size() - 1);
         }
 
         if (currentCoos.i > keyCoos.i) {
             sequences.add(currentSequence + '^');
             currentCoos.i--;
-            tapKey(c, sequences, sequences.size() - 1);
+            // tapKey(c, sequences, sequences.size() - 1);
         }
 
         return sequences;
@@ -72,7 +72,7 @@ public abstract class Keypad {
             List<String> newSequences = new ArrayList<>();
             for (String sequence : keypadToControl.sequences) {
                 for (char c : sequence.toCharArray()) {
-                    tapKey(c, newSequences, 0);
+                    // tapKey(c, newSequences, 0);
                 }
             }
             this.sequences = newSequences;
